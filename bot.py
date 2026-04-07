@@ -11,14 +11,21 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
 async def get_weather(update: Update, context: ContextTypes.DEFAULT_TYPE):
     city = update.message.text
 
-    url = f"http://api.openweathermap.org/data/2.5/weather?q={city}&appid={WEATHER_API}&units=metric&lang=ru"
+    url = f"http://api.openweathermap.org/data/2.5/forecast?q={city}&appid={WEATHER_API}&units=metric&lang=ru"
     response = requests.get(url)
     data = response.json()
 
-    if data.get("main"):
-        temp = data["main"]["temp"]
-        desc = data["weather"][0]["description"]
-        text = f"🌤 Погода в городе {city}:\n🌡 Температура: {temp}°C\n☁️ {desc}"
+    if data.get("list"):
+        text = f"📅 Прогноз на 5 дней для {city}:\n\n"
+
+        # берем по одному значению в день (каждые 8 записей ≈ 24 часа)
+        for i in range(0, 40, 8):
+            day = data["list"][i]
+            date = day["dt_txt"].split(" ")[0]
+            temp = day["main"]["temp"]
+            desc = day["weather"][0]["description"]
+
+            text += f"{date}\n🌡 {temp}°C | ☁️ {desc}\n\n"
     else:
         text = "❌ Город не найден"
 
