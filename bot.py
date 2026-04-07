@@ -3,8 +3,8 @@ import requests
 from telegram import Update
 from telegram.ext import ApplicationBuilder, CommandHandler, MessageHandler, filters, ContextTypes
 
-TOKEN = "8668276795:AAE1cKzog34pQP6zEyLdE8Q9xmQp_dOkNUI"
-WEATHER_API = "20fdfb87d84c26c97626e51736606b17"
+TOKEN ="8668276795:AAE1cKzog34pQP6zEyLdE8Q9xmQp_dOkNUI"
+WEATHER_API ="20fdfb87d84c26c97626e51736606b17"
 
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     await update.message.reply_text("Напиши город 🌍")
